@@ -6,6 +6,7 @@ import {
   getDocs,
   addDoc,
   updateDoc,
+  deleteDoc,
   doc,
 } from "firebase/firestore";
 import { async } from "@firebase/util";
@@ -26,6 +27,11 @@ function App() {
       age: age + 1,
     };
     await updateDoc(userdOC, newFields);
+  };
+
+  const deleteUser = async (id) => {
+    const userdOC = doc(db, "users", id);
+    await deleteDoc(userdOC);
   };
 
   useEffect(() => {
@@ -63,6 +69,13 @@ function App() {
               }}
             >
               Increase Age
+            </button>
+            <button
+              onClick={() => {
+                deleteUser(user.id);
+              }}
+            >
+              Delete User
             </button>
           </div>
         );
